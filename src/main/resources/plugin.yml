@@ -1,0 +1,7 @@
+name: RecipeHelper
+version: '1.0-SNAPSHOT'
+main: su.nezushin.recipes.RecipeHelper
+api-version: '1.21'
+commands:
+  recipehelper:
+    aliases: [rh]
