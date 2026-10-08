@@ -13,6 +13,7 @@ import su.nezushin.recipes.api.HelperShapedCraftUsedEvent;
 import su.nezushin.recipes.craft.impl.FurnaceCraft;
 import su.nezushin.recipes.craft.impl.ShapedCraft;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Furnace;
 import org.bukkit.event.EventHandler;
@@ -72,8 +73,11 @@ public class RecipeHelperListener implements Listener {
         }
 
         if (returnBucket) {
-            Bukkit.getScheduler().scheduleSyncDelayedTask(RecipeHelper.getInstance(),
-                    () -> inv.setItem(3, new ItemStack(Material.BUCKET)));
+            Location loc = inv.getLocation();
+            if (loc != null) {
+                Bukkit.getRegionScheduler().runDelayed(RecipeHelper.getInstance(), loc, task ->
+                        inv.setItem(3, new ItemStack(Material.BUCKET)), 1L);
+            }
         }
 
 
@@ -120,8 +124,8 @@ public class RecipeHelperListener implements Listener {
                 FurnaceInventory inv = furn.getInventory();
 
                 inv.setSmelting(new ItemStack(Material.BUCKET));
-                Bukkit.getScheduler().scheduleSyncDelayedTask(RecipeHelper.getInstance(),
-                        () -> inv.setSmelting(new ItemStack(Material.BUCKET)));
+                Bukkit.getRegionScheduler().runDelayed(RecipeHelper.getInstance(), e.getBlock().getLocation(), task ->
+                        inv.setSmelting(new ItemStack(Material.BUCKET)), 1L);
             }
 
             e.setResult(event.getResult());
@@ -173,10 +177,10 @@ public class RecipeHelperListener implements Listener {
                     ItemStack item = matrix[i];
 
                     if (item != null && buckets.contains(item.getType())) {
-                        final int ii = i;
-                        inv.setItem(ii + 1, new ItemStack(Material.BUCKET));
-                        Bukkit.getScheduler().scheduleSyncDelayedTask(RecipeHelper.getInstance(),
-                                () -> inv.setItem(ii + 1, new ItemStack(Material.BUCKET)));
+                        final int slot = i + 1;
+                        inv.setItem(slot, new ItemStack(Material.BUCKET));
+                        e.getWhoClicked().getScheduler().runDelayed(RecipeHelper.getInstance(), task ->
+                                inv.setItem(slot, new ItemStack(Material.BUCKET)), null, 1L);
                     }
 
                 }

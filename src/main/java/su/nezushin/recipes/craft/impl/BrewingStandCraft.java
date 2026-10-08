@@ -32,6 +32,7 @@ public class BrewingStandCraft extends AbstractCraft implements ConfigurationSer
 
     @Override
     public void register() {
+        checkGlobal();
         potionMix = new PotionMix(getKey(), result, potion.getRecipeChoice(), source.getRecipeChoice());
         Bukkit.getPotionBrewer().addPotionMix(potionMix);
         RecipeHelper.getInstance().getRecipesBrewingStand().add(this);
@@ -44,6 +45,7 @@ public class BrewingStandCraft extends AbstractCraft implements ConfigurationSer
 
     @Override
     public void unregister() {
+        checkGlobal();
         Bukkit.getPotionBrewer().removePotionMix(getKey());
         RecipeHelper.getInstance().getRecipesBrewingStand().remove(this);
     }

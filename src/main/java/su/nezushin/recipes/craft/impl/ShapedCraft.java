@@ -36,6 +36,7 @@ public class ShapedCraft extends AbstractCraft implements ConfigurationSerializa
 
     @Override
     public void register() {
+        checkGlobal();
         recipe = new ShapedRecipe(RecipeHelper.getInstance().createNamespacedKey(
                 String.valueOf(result.hashCode() * matrix.hashCode())), result);
 
@@ -134,6 +135,7 @@ public class ShapedCraft extends AbstractCraft implements ConfigurationSerializa
 
     @Override
     public void unregister() {
+        checkGlobal();
         final Iterator<Recipe> recipeIterator = RecipeHelper.getInstance().getServer().recipeIterator();
         while (recipeIterator.hasNext()) {
             final Recipe recipe = recipeIterator.next();

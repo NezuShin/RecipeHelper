@@ -30,6 +30,7 @@ public class FurnaceCraft extends AbstractCraft implements ConfigurationSerializ
 
     @Override
     public void register() {
+        checkGlobal();
         recipe = new FurnaceRecipe(RecipeHelper.getInstance()
                 .createNamespacedKey(String.valueOf(source.hashCode() + result.hashCode())),
                 result,
@@ -54,6 +55,7 @@ public class FurnaceCraft extends AbstractCraft implements ConfigurationSerializ
 
     @Override
     public void unregister() {
+        checkGlobal();
         final Iterator<Recipe> recipeIterator = RecipeHelper.getInstance().getServer().recipeIterator();
         while (recipeIterator.hasNext()) {
             final Recipe recipe = recipeIterator.next();
