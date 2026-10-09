@@ -120,12 +120,13 @@ public class RecipeHelperListener implements Listener {
             }
 
             if (buckets.contains(fc.getSource().getItem().getType()) && returnBuckets) {
-                Furnace furn = (Furnace) e.getBlock().getState();
-                FurnaceInventory inv = furn.getInventory();
-
-                inv.setSmelting(new ItemStack(Material.BUCKET));
-                Bukkit.getRegionScheduler().runDelayed(RecipeHelper.getInstance(), e.getBlock().getLocation(), task ->
-                        inv.setSmelting(new ItemStack(Material.BUCKET)), 1L);
+                Location loc = e.getBlock().getLocation();
+                Bukkit.getRegionScheduler().runDelayed(RecipeHelper.getInstance(), loc, task -> {
+                    if (!(loc.getBlock().getState(false) instanceof Furnace furnace)) {
+                        return;
+                    }
+                    furnace.getInventory().setSmelting(new ItemStack(Material.BUCKET));
+                }, 1L);
             }
 
             e.setResult(event.getResult());

@@ -32,15 +32,11 @@ public class NBTUtil {
         var diff = first.extractDifference(second);
 
         diff.mergeCompound(second.extractDifference(first));
-        System.out.println("123");
-        System.out.println(diff);
-        System.out.println("123");
         var res = checkTags(diff, ignoreTags, false, "");
         return res;
     }
 
     public static boolean checkTags(ReadWriteNBT nbt, Set<String> ignoreTags, boolean appendPath, String path) {
-        System.out.println(path);
         for (var i : nbt.getKeys()) {
             var ipath = (appendPath ? path + "." : "") + i;
             if (ignoreTags.stream().noneMatch(j -> j.startsWith(ipath)))

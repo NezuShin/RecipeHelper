@@ -38,7 +38,6 @@ public class RecipeHelper extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-        Bukkit.resetRecipes();
     }
 
     public NamespacedKey createNamespacedKey(String key) {
